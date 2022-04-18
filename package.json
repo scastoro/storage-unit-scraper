@@ -1,0 +1,14 @@
+{
+  "name": "storage-unit-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^17.0.25",
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.3.0",
+    "puppeteer": "^13.5.2",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  }
+}
