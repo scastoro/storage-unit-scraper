@@ -9,16 +9,18 @@ const facilityTwoScrape = async () => {
   }
   await page.goto(process.env.FACILITY_2_URL);
 
-  let data = await page.evaluate(() => {
+  const id = process.env.FACILITY_2_ID;
+
+  let data = await page.evaluate((id) => {
     let items = Array.from(document.querySelectorAll('.pure-g li[class*="unit-division-"]'));
     const results = items.map((item) => {
       return {
         dimensions: {
           length: item
-            .querySelector('.card-unit-size-title')
+            .querySelector('.container.size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[0],
           width: item
-            .querySelector('.card-unit-size-title')
+            .querySelector('.container.size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
         },
         price: item.querySelector('.price')?.textContent?.replace(/,|\$/g, ''),
@@ -42,11 +44,12 @@ const facilityTwoScrape = async () => {
           : item.classList.contains('unit-division-2')
           ? 'large'
           : null,
+        facility: id,
       };
     });
 
     return results;
-  });
+  }, id);
 
   console.log(data);
   await browser.close();

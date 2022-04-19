@@ -1,2 +1,4 @@
 /node_modules
 .env
+facility.ts
+facility.json

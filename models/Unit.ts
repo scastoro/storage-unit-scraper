@@ -43,5 +43,9 @@ const UnitSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+UnitSchema.statics.getUnitSize = function () {
+  return `${this.dimensions.length}' x ${this.dimensions.width}'`;
+};
+
 module.exports = mongoose.model('Unit', UnitSchema);
 export {};

@@ -16,10 +16,10 @@ const facilityThreeScrape = async () => {
       return {
         dimensions: {
           length: item
-            .querySelector('.card-unit-size-title')
+            .querySelector('.lvu-unit-size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[0],
           width: item
-            .querySelector('.card-unit-size-title')
+            .querySelector('.lvu-unit-size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
         },
         start_price: item.querySelector('del')?.textContent?.replace(/,|\$/g, ''),

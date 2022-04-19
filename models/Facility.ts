@@ -12,19 +12,19 @@ const FacilitySchema = new mongoose.Schema(
           type: String,
           required: [true, 'Facility street address is required.'],
         },
-        city: { String, required: [true, 'Facility address is required.'] },
+        city: { type: String, required: [true, 'Facility address is required.'] },
         postal_code: {
-          Number,
+          type: Number,
           required: [true, 'Facility address is required.'],
         },
-        state: { String, required: [true, 'Facility address is required.'] },
-        country: { String, required: [true, 'Facility address is required.'] },
+        state: { type: String, required: [true, 'Facility address is required.'] },
+        country: { type: String, required: [true, 'Facility address is required.'] },
         area: String,
         lat: Number,
         long: Number,
       },
     },
-    phone: { type: Number },
+    phone: { type: String },
     hours: {
       type: {
         monday: String,
@@ -51,6 +51,12 @@ const FacilitySchema = new mongoose.Schema(
     },
     features: {
       type: [String],
+    },
+    website: {
+      type: String,
+    },
+    units_url: {
+      type: String,
     },
   },
   {
