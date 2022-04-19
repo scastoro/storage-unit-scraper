@@ -14,24 +14,22 @@ const facilityThreeScrape = async () => {
 
     const results = items.map((item) => {
       return {
-        dimensions: item
-          .querySelector('.lvu-unit-size')
-          ?.firstChild?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g),
-        start_price: item
-          .querySelector('del')
-          ?.textContent?.replace(/,|\$/g, ''),
-        price: item
-          .querySelector('p.unit-rate.price')
-          ?.textContent?.replace(/,|\$/g, '')
-          .trim(),
-        climate: Array.from(
-          item.querySelectorAll('ul.lvu-v3-amenities-descriptions li')
-        )
+        dimensions: {
+          length: item
+            .querySelector('.card-unit-size-title')
+            ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[0],
+          width: item
+            .querySelector('.card-unit-size-title')
+            ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
+        },
+        start_price: item.querySelector('del')?.textContent?.replace(/,|\$/g, ''),
+        price: item.querySelector('p.unit-rate.price')?.textContent?.replace(/,|\$/g, '').trim(),
+        climate: Array.from(item.querySelectorAll('ul.lvu-v3-amenities-descriptions li'))
           ?.map((listItem) => listItem.textContent?.trim())
           .includes('Climate Controlled'),
-        description: Array.from(
-          item.querySelectorAll('ul.lvu-v3-amenities-descriptions li')
-        )?.map((listItem) => listItem.textContent?.trim()),
+        description: Array.from(item.querySelectorAll('ul.lvu-v3-amenities-descriptions li'))?.map(
+          (listItem) => listItem.textContent?.trim()
+        ),
         amount_left: item.classList.contains('parking')
           ? document.querySelector('span.label')?.textContent?.trim()
           : item.querySelector('.lvu-v3-remainder span')?.textContent?.trim(),

@@ -4,7 +4,7 @@ const UnitSchema = new mongoose.Schema(
   {
     dimensions: {
       type: {
-        height: Number,
+        length: Number,
         width: Number,
       },
       required: [true, 'Unit must have dimensions.'],
