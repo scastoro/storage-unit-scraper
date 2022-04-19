@@ -50,6 +50,5 @@ const facilityTwoScrape = async () => {
   return data;
 };
 
-facilityTwoScrape();
-
-export default facilityTwoScrape;
+module.exports = facilityTwoScrape;
+export {};

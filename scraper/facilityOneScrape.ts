@@ -51,6 +51,5 @@ const facilityOneScrape = async () => {
   return data;
 };
 
-facilityOneScrape();
-
 module.exports = facilityOneScrape;
+export {};

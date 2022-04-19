@@ -59,3 +59,4 @@ const FacilitySchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('Facility', FacilitySchema);
+export {};

@@ -43,5 +43,5 @@ const UnitSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export {};
 module.exports = mongoose.model('Unit', UnitSchema);
+export {};
