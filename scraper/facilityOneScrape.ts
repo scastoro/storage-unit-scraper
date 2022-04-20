@@ -1,7 +1,8 @@
 import * as puppeteer from 'puppeteer';
 import './config';
+import { UnitInformation } from '../types';
 
-const facilityOneScrape = async () => {
+const facilityOneScrape = async (): Promise<UnitInformation[]> => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   if (process.env.FACILITY_1_URL === undefined) {

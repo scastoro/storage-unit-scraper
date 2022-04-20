@@ -1,7 +1,8 @@
 import * as puppeteer from 'puppeteer';
 import '../config';
+import { UnitInformation } from '../types';
 
-const facilityTwoScrape = async () => {
+const facilityTwoScrape = async (): Promise<UnitInformation[]> => {
   let browser: puppeteer.Browser;
   try {
     browser = await puppeteer.launch();
