@@ -1,8 +1,13 @@
-require('dotenv').config({ path: '../.env' });
-const puppeteer = require('puppeteer');
+import * as puppeteer from 'puppeteer';
+import '../config';
 
 const facilityTwoScrape = async () => {
-  const browser = await puppeteer.launch();
+  let browser: puppeteer.Browser;
+  try {
+    browser = await puppeteer.launch();
+  } catch (e) {
+    console.log(e);
+  }
   const page = await browser.newPage();
   if (process.env.FACILITY_2_URL === undefined) {
     throw Error('Env variable undefined.');
@@ -11,8 +16,12 @@ const facilityTwoScrape = async () => {
 
   const id = process.env.FACILITY_2_ID;
 
+  console.log(id);
+
   let data = await page.evaluate((id) => {
-    let items = Array.from(document.querySelectorAll('.pure-g li[class*="unit-division-"]'));
+    let items = Array.from(
+      document.querySelectorAll('.pure-g li[class*="unit-division-"]')
+    );
     const results = items.map((item) => {
       return {
         dimensions: {
@@ -56,5 +65,6 @@ const facilityTwoScrape = async () => {
   return data;
 };
 
-module.exports = facilityTwoScrape;
-export {};
+facilityTwoScrape();
+
+export default facilityTwoScrape;

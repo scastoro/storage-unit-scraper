@@ -47,5 +47,4 @@ UnitSchema.statics.getUnitSize = function () {
   return `${this.dimensions.length}' x ${this.dimensions.width}'`;
 };
 
-module.exports = mongoose.model('Unit', UnitSchema);
-export {};
+export default mongoose.model('Unit', UnitSchema);
