@@ -1,5 +1,5 @@
 import * as puppeteer from 'puppeteer';
-import './config';
+import '../config';
 import { UnitInformation } from '../types';
 
 const facilityOneScrape = async (): Promise<UnitInformation[]> => {
@@ -34,8 +34,9 @@ const facilityOneScrape = async (): Promise<UnitInformation[]> => {
         description: item.querySelector('.card-text')?.firstChild?.textContent?.trim().split(', '),
         promotion: item.querySelector('.card-text-promo')?.textContent?.trim(),
         amount_left: item.querySelector('.card-text-promo')?.textContent?.trim(),
-        size: item.getAttribute('data-size'),
-        type: item.getAttribute('data-size') === 'parking' ? 'parking' : 'self-storage',
+        size:
+          item.getAttribute('data-size') === 'parking' ? undefined : item.getAttribute('data-size'),
+        type: item.getAttribute('data-size') === 'parking' ? 'parking' : 'self storage',
         facility: id,
       };
     });

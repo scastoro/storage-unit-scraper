@@ -8,15 +8,13 @@ import facilityThreeScrape from './scraper/facilityThreeScrape';
 const scrape = async () => {
   await mongoose
     .connect(process.env.MONGO_URL, {})
-    .then((item) => console.log('Connected to database!'))
+    .then(() => console.log('Connected to database!'))
     .catch((err) => console.log(err));
 
   mongoose.connection.on('error', (err) => console.log(err));
 
   const firstUnits = await facilityOneScrape();
-
   const secondUnits = await facilityTwoScrape();
-
   const thirdUnits = await facilityThreeScrape();
 
   const responseOne = await Unit.create(firstUnits);
@@ -27,7 +25,7 @@ const scrape = async () => {
 
   await mongoose
     .disconnect()
-    .then((item) => console.log('Disconnected from the database.'))
+    .then(() => console.log('Disconnected from the database.'))
     .catch((err) => console.log(err));
 };
 

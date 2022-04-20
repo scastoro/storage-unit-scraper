@@ -1,5 +1,5 @@
 import * as puppeteer from 'puppeteer';
-import './config';
+import '../config';
 import { UnitInformation } from '../types';
 
 const facilityThreeScrape = async (): Promise<UnitInformation[]> => {
@@ -45,7 +45,7 @@ const facilityThreeScrape = async (): Promise<UnitInformation[]> => {
           ? 'large'
           : item.classList.contains('xl')
           ? 'extra large'
-          : null,
+          : undefined,
         type: item.classList.contains('parking') ? 'parking' : 'self storage',
         facility: id,
       };
