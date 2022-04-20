@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer';
 import './config';
 
 const facilityThreeScrape = async () => {
@@ -9,7 +9,9 @@ const facilityThreeScrape = async () => {
   }
   await page.goto(process.env.FACILITY_3_URL);
 
-  let data = await page.evaluate(() => {
+  const id = process.env.FACILITY_3_ID;
+
+  let data = await page.evaluate((id) => {
     let items = Array.from(document.querySelectorAll('div[itemprop="item"]'));
 
     const results = items.map((item) => {
@@ -22,21 +24,14 @@ const facilityThreeScrape = async () => {
             .querySelector('.lvu-unit-size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
         },
-        start_price: item
-          .querySelector('del')
-          ?.textContent?.replace(/,|\$/g, ''),
-        price: item
-          .querySelector('p.unit-rate.price')
-          ?.textContent?.replace(/,|\$/g, '')
-          .trim(),
-        climate: Array.from(
-          item.querySelectorAll('ul.lvu-v3-amenities-descriptions li')
-        )
+        start_price: item.querySelector('del')?.textContent?.replace(/,|\$/g, ''),
+        price: item.querySelector('p.unit-rate.price')?.textContent?.replace(/,|\$/g, '').trim(),
+        climate: Array.from(item.querySelectorAll('ul.lvu-v3-amenities-descriptions li'))
           ?.map((listItem) => listItem.textContent?.trim())
           .includes('Climate Controlled'),
-        description: Array.from(
-          item.querySelectorAll('ul.lvu-v3-amenities-descriptions li')
-        )?.map((listItem) => listItem.textContent?.trim()),
+        description: Array.from(item.querySelectorAll('ul.lvu-v3-amenities-descriptions li'))?.map(
+          (listItem) => listItem.textContent?.trim()
+        ),
         amount_left: item.classList.contains('parking')
           ? document.querySelector('span.label')?.textContent?.trim()
           : item.querySelector('.lvu-v3-remainder span')?.textContent?.trim(),
@@ -51,15 +46,16 @@ const facilityThreeScrape = async () => {
           ? 'extra large'
           : null,
         type: item.classList.contains('parking') ? 'parking' : 'self storage',
+        facility: id,
       };
     });
 
     return results;
-  });
+  }, id);
 
   console.log(data);
   await browser.close();
   return data;
 };
 
-export default facilityThreeScrape();
+export default facilityThreeScrape;

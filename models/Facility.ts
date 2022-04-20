@@ -73,5 +73,4 @@ const FacilitySchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.models.Facility ||
-  mongoose.model('Facility', FacilitySchema);
+export default mongoose.model('Facility', FacilitySchema);

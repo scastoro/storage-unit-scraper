@@ -1,9 +1,9 @@
 import './config';
 import mongoose from 'mongoose';
 import Unit from './models/Unit';
-// const scrapeOne = require('./scraper/facilityOneScrape');
+import facilityOneScrape from './scraper/facilityOneScrape';
 import facilityTwoScrape from './scraper/facilityTwoScrape';
-// const scrapeThree = require('./scraper/facilityThreeScrape');
+import facilityThreeScrape from './scraper/facilityThreeScrape';
 
 const scrape = async () => {
   await mongoose
@@ -13,19 +13,17 @@ const scrape = async () => {
 
   mongoose.connection.on('error', (err) => console.log(err));
 
-  // const firstUnits = await scrapeOne();
+  const firstUnits = await facilityOneScrape();
 
   const secondUnits = await facilityTwoScrape();
 
-  // const thirdUnits = await scrapeThree();
+  const thirdUnits = await facilityThreeScrape();
 
-  // const allUnits = firstUnits.concat(secondUnits, thirdUnits);
+  const responseOne = await Unit.create(firstUnits);
+  const responseTwo = await Unit.create(secondUnits);
+  const responseThree = await Unit.create(thirdUnits);
 
-  // const response = await Unit.create(allUnits);
-
-  const response = await Unit.create(secondUnits);
-
-  console.log(response);
+  console.log(responseOne, responseTwo, responseThree);
 
   await mongoose
     .disconnect()

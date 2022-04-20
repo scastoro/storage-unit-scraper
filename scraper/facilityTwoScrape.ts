@@ -19,9 +19,7 @@ const facilityTwoScrape = async () => {
   console.log(id);
 
   let data = await page.evaluate((id) => {
-    let items = Array.from(
-      document.querySelectorAll('.pure-g li[class*="unit-division-"]')
-    );
+    let items = Array.from(document.querySelectorAll('.pure-g li[class*="unit-division-"]'));
     const results = items.map((item) => {
       return {
         dimensions: {
@@ -60,11 +58,8 @@ const facilityTwoScrape = async () => {
     return results;
   }, id);
 
-  console.log(data);
   await browser.close();
   return data;
 };
-
-facilityTwoScrape();
 
 export default facilityTwoScrape;

@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@config": ["config.ts"]
-    },
     "module": "commonjs",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
