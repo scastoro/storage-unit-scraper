@@ -9,7 +9,7 @@ interface Unit {
   climate: boolean;
   promotion?: string;
   description?: string[];
-  type?: 'self storage' | 'parking';
+  type?: 'self storage' | 'parking' | 'RV';
   size?: 'small' | 'medium' | 'large' | 'extra large';
   amount_left?: string;
   facility: Types.ObjectId;
@@ -40,7 +40,7 @@ const UnitSchema = new Schema<Unit>(
     },
     type: {
       type: String,
-      enum: ['self storage', 'parking'],
+      enum: ['self storage', 'parking', 'RV'],
     },
     size: {
       type: String,

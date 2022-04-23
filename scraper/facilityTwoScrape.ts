@@ -20,7 +20,9 @@ const facilityTwoScrape = async (): Promise<UnitInformation[]> => {
   console.log(id);
 
   let data = await page.evaluate((id) => {
-    let items = Array.from(document.querySelectorAll('.pure-g li[class*="unit-division-"]'));
+    let items = Array.from(
+      document.querySelectorAll('.pure-g li[class*="unit-division-"]')
+    );
     const results = items.map((item) => {
       return {
         dimensions: {
@@ -51,7 +53,7 @@ const facilityTwoScrape = async (): Promise<UnitInformation[]> => {
           ? 'small'
           : item.classList.contains('unit-division-2')
           ? 'large'
-          : null,
+          : undefined,
         facility: id,
       };
     });

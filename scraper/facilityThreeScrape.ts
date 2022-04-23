@@ -25,14 +25,21 @@ const facilityThreeScrape = async (): Promise<UnitInformation[]> => {
             .querySelector('.lvu-unit-size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
         },
-        start_price: item.querySelector('del')?.textContent?.replace(/,|\$/g, ''),
-        price: item.querySelector('p.unit-rate.price')?.textContent?.replace(/,|\$/g, '').trim(),
-        climate: Array.from(item.querySelectorAll('ul.lvu-v3-amenities-descriptions li'))
+        start_price: item
+          .querySelector('del')
+          ?.textContent?.replace(/,|\$/g, ''),
+        price: item
+          .querySelector('p.unit-rate.price')
+          ?.textContent?.replace(/,|\$/g, '')
+          .trim(),
+        climate: Array.from(
+          item.querySelectorAll('ul.lvu-v3-amenities-descriptions li')
+        )
           ?.map((listItem) => listItem.textContent?.trim())
           .includes('Climate Controlled'),
-        description: Array.from(item.querySelectorAll('ul.lvu-v3-amenities-descriptions li'))?.map(
-          (listItem) => listItem.textContent?.trim()
-        ),
+        description: Array.from(
+          item.querySelectorAll('ul.lvu-v3-amenities-descriptions li')
+        )?.map((listItem) => listItem.textContent?.trim()),
         amount_left: item.classList.contains('parking')
           ? document.querySelector('span.label')?.textContent?.trim()
           : item.querySelector('.lvu-v3-remainder span')?.textContent?.trim(),
@@ -46,7 +53,11 @@ const facilityThreeScrape = async (): Promise<UnitInformation[]> => {
           : item.classList.contains('xl')
           ? 'extra large'
           : undefined,
-        type: item.classList.contains('parking') ? 'parking' : 'self storage',
+        type: item.classList.contains('parking')
+          ? 'parking'
+          : item.querySelector('h5.lvu-unit-name').textContent.includes('RV')
+          ? 'RV'
+          : 'self storage',
         facility: id,
       };
     });
