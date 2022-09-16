@@ -20,38 +20,38 @@ const facilityTwoScrape = async (): Promise<UnitInformation[]> => {
   console.log(id);
 
   let data = await page.evaluate((id) => {
-    let items = Array.from(
+    let units = Array.from(
       document.querySelectorAll('.pure-g li[class*="unit-division-"]')
     );
-    const results = items.map((item) => {
+    const results = units.map((unit) => {
       return {
         dimensions: {
-          length: item
+          length: unit
             .querySelector('.container.size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[0],
-          width: item
+          width: unit
             .querySelector('.container.size')
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
         },
-        price: item.querySelector('.price')?.textContent?.replace(/,|\$/g, ''),
-        climate: item
+        price: unit.querySelector('.price')?.textContent?.replace(/,|\$/g, ''),
+        climate: unit
           .querySelector('.description')
           ?.firstChild?.textContent?.includes('Climate Controlled'),
-        description: item
+        description: unit
           .querySelector('.description')
           ?.firstChild?.textContent?.trim()
           .split(' - '),
         promotion:
-          item.querySelector('.specials')?.firstChild?.textContent?.trim() ||
-          item.querySelector('.no-offer')?.firstChild?.textContent?.trim(),
-        type: item
+          unit.querySelector('.specials')?.firstChild?.textContent?.trim() ||
+          unit.querySelector('.no-offer')?.firstChild?.textContent?.trim(),
+        type: unit
           .querySelector('.description')
           ?.firstChild?.textContent?.trim()
           .split(' - ')[0]
           .toLowerCase(),
-        size: item.classList.contains('unit-division-1')
+        size: unit.classList.contains('unit-division-1')
           ? 'small'
-          : item.classList.contains('unit-division-2')
+          : unit.classList.contains('unit-division-2')
           ? 'large'
           : undefined,
         facility: id,
