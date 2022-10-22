@@ -26,19 +26,22 @@ const facilityOneScrape = async (): Promise<UnitInformation[]> => {
         },
         start_price: unit.querySelector('del')?.textContent?.replace(/,|\$/g, ''),
         price: unit.querySelector('.price-bold')?.textContent?.replace(/,|\$/g, ''),
-        climate: unit
-          .querySelector('.card-text')
-          ?.firstChild?.textContent?.trim()
-          .split(', ')
-          .includes('Climate Controlled'),
-        description: unit.querySelector('.card-text')?.firstChild?.textContent?.trim().split(', '),
+        climate: Array.from(unit.querySelectorAll('ul.unit-row-features li'))?.find((ele) =>
+          ele.textContent.includes('Climate Controlled')
+        )
+          ? true
+          : false,
+        description: Array.from(unit.querySelectorAll('ul.unit-row-features li'))?.map(
+          (ele) => ele.textContent.trim()
+        ),
         promotion: unit.querySelector('.card-text-promo')?.textContent?.trim(),
         amount_left: unit.querySelector('.card-text-promo')?.textContent?.trim(),
-        size: unit.getAttribute('data-size') === 'parking' 
-          ? undefined 
-          : unit.getAttribute('data-size').includes(',')
-          ? unit.getAttribute('data-size').split(',')[0]
-          : unit.getAttribute('data-size'),
+        size:
+          unit.getAttribute('data-size') === 'parking'
+            ? undefined
+            : unit.getAttribute('data-size').includes(',')
+            ? unit.getAttribute('data-size').split(',')[0]
+            : unit.getAttribute('data-size'),
         type: unit.getAttribute('data-size') === 'parking' ? 'parking' : 'self storage',
         facility: id,
       };
