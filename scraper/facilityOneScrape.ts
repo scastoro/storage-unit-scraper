@@ -25,7 +25,7 @@ const facilityOneScrape = async (): Promise<UnitInformation[]> => {
             ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g)[1],
         },
         start_price: unit.querySelector('del')?.textContent?.replace(/,|\$/g, ''),
-        price: unit.querySelector('.price-bold')?.textContent?.replace(/,|\$/g, ''),
+        price: unit.querySelector('.price-bold')?.textContent?.replace(/,|\$/g, '').trim(),
         climate: Array.from(unit.querySelectorAll('ul.unit-row-features li'))?.find((ele) =>
           ele.textContent.includes('Climate Controlled')
         )
